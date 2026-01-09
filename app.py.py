@@ -74,5 +74,7 @@ def index():
 
 # このファイルが直接実行された場合、デバッグモードでWebサーバーを起動します
 if __name__ == "__main__":
-    app.run()
+    import os
+    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))
+
 
