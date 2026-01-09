@@ -4,7 +4,7 @@
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-5PPF6MGL');</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>サブウェイ&nbsp;カスタムガチャ</title>
+  <title>サブウェイ カスタムガチャ</title>
   <style>
     body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #f9f9f9; text-align: center; color: #333; margin: 0; padding: 20px; } 
     .container { background: white; max-width: 500px; margin: 0 auto; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden; border-top: 8px solid #00923f; } 
@@ -14,8 +14,23 @@
     h2 { color: #00923f; border-bottom: 2px solid #ffc20e; padding-bottom: 5px; margin-top: 0; } 
     .detail-item { margin-bottom: 15px; padding: 10px; background: #f0f7f3; border-radius: 8px; } 
     .label { font-weight: bold; color: #00923f; display: block; margin-bottom: 5px; } 
-    .veggie-list div { white-space: nowrap; margin-bottom: 3px; } 
-    .btn { display: block; width: 80%; margin: 20px auto; padding: 15px; background: #00923f; color: white; text-decoration: none; border-radius: 30px; font-weight: bold; transition: 0.3s; border: 2px solid #00923f; } 
+    
+    /* 野菜リストの設定 */
+    .veggie-list div { white-space: nowrap; margin-bottom: 3px; font-size: 0.9em; } 
+    
+    /* ソースリストの設定（1行最大4列） */
+    .sauce-list { 
+      display: grid; 
+      grid-template-columns: repeat(2, 1fr); /* スマホ等では2列 */
+      gap: 5px; 
+      font-size: 0.85em; 
+    }
+    @media (min-width: 400px) {
+      .sauce-list { grid-template-columns: repeat(4, 1fr); } /* 横幅がある時は4列 */
+    }
+    .sauce-list div { white-space: nowrap; }
+
+    .btn { display: block; width: 80%; margin: 20px auto; padding: 15px; background: #00923f; color: white; text-decoration: none; border-radius: 30px; font-weight: bold; transition: 0.3s; border: 2px solid #00923f; text-align: center; } 
     .btn:hover { background: #ffc20e; color: #00923f; border-color: #ffc20e; }
   </style>
 </head>
@@ -24,7 +39,7 @@
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5PPF6MGL" height="0" width="0" style="display:none;visibility:hidden"></iframe>
   </noscript>
   <div class="container">
-    <div class="header">サブウェイ&nbsp;カスタムガチャ</div>
+    <div class="header">サブウェイ カスタムガチャ</div>
     
     <img src="{{ url_for('static', filename='images/' + image) }}" alt="{{ item }}" class="result-image">
     
@@ -45,7 +60,12 @@
         <span class="label">🧀 有料トッピング</span>{{ toppings|join('、 ') }}
       </div>
       <div class="detail-item">
-        <span class="label">🍯 ソース</span>{{ sauces|join('、 ') }}
+        <span class="label">🍯 ソース</span>
+        <div class="sauce-list">
+          {% for sauce in sauces %}
+            <div>・{{ sauce }}</div>
+          {% endfor %}
+        </div>
       </div>
     </div>
     <a href="/" class="btn">もう一度ガチャを回す</a>
@@ -53,9 +73,3 @@
   <p style="font-size: 0.8em; color: #999; margin-top: 20px;">※画像がない場合は枠のみ表示されます</p>
 </body>
 </html>
-
-
-
-
-
-
