@@ -73,6 +73,6 @@ def index():
                            sauces=sauce_choice)  # 選ばれたソース
 
 # このファイルが直接実行された場合、デバッグモードでWebサーバーを起動します
-if __name__ == '__main__':
-    # host='0.0.0.0' は「外部からの接続を許可する」という意味です
-    app.run(host='0.0.0.0', port=5000, debug=True)
+if __name__ == "__main__":
+    app.run()
+
