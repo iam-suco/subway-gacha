@@ -13,45 +13,39 @@
     .content { padding: 20px; text-align: left; } 
     h2 { color: #00923f; border-bottom: 2px solid #ffc20e; padding-bottom: 5px; margin-top: 0; } 
     
-    /* 文字サイズと構造を全項目で統一 */
     .detail-item { 
       margin-bottom: 15px; 
-      padding: 10px; 
+      padding: 12px; 
       background: #f0f7f3; 
       border-radius: 8px; 
-      font-size: 1.0em; /* 全体の基本サイズを固定 */
-      line-height: 1.5;
+      line-height: 1.6;
     } 
-    .label { font-weight: bold; color: #00923f; display: block; margin-bottom: 5px; font-size: 0.95em; } 
-    
-    /* 共通のテキストスタイル（パン、トッピング、野菜用） */
-    .text-content { 
-      display: block; 
-      font-size: 1.0em; 
+    .label { font-weight: bold; color: #00923f; display: block; margin-bottom: 8px; font-size: 0.95em; } 
+
+    /* 全体の文字サイズを統一 */
+    .display-text { 
+      font-size: 1.0rem; 
+      color: #333;
     }
 
-    /* 野菜リスト：確実に1行1項目 */
-    .veggie-list { display: block !important; }
-    .veggie-list div { display: block; width: 100%; } 
+    /* 野菜：1行1項目 */
+    .veggie-list div { 
+      margin-bottom: 4px; 
+      white-space: nowrap; 
+    } 
     
-    /* ソースリスト：スマホは2列、PCは3列 */
+    /* ソース：長い名前は1行を独占、短いものは並ぶ設定 */
     .sauce-list { 
-      display: grid; 
-      grid-template-columns: repeat(2, 1fr); 
-      gap: 10px 5px; 
-    }
-    @media (min-width: 450px) {
-      .sauce-list { grid-template-columns: repeat(3, 1fr); }
+      display: flex;
+      flex-wrap: wrap; /* 折り返しを許可 */
+      gap: 6px 10px; 
     }
     .sauce-list div { 
-      font-size: 1.0em;
-      white-space: normal; /* 改行を許可して「...」を防ぐ */
-      word-break: break-all; /* 長い単語でも枠内で折り返す */
-      overflow: visible;
+      white-space: nowrap; /* 1つのソース名は絶対に改行しない */
+      font-size: 1.0rem;    /* 文字サイズを完全に統一 */
+      flex: 1 0 auto;      /* 必要に応じて横に広がる */
+      max-width: 100%;     /* 枠は超えない */
     }
-
-    .btn { display: block; width: 80%; margin: 20px auto; padding: 15px; background: #00923f; color: white; text-decoration: none; border-radius: 30px; font-weight: bold; transition: 0.3s; border: 2px solid #00923f; text-align: center; } 
-    .btn:hover { background: #ffc20e; color: #00923f; border-color: #ffc20e; }
   </style>
 </head>
 <body>
@@ -64,33 +58,35 @@
       
       <div class="detail-item">
         <span class="label">🥪 パンと焼き加減</span>
-        <div class="text-content">{{ bread }}（{{ toast }}）</div>
+        <div class="display-text">{{ bread }}（{{ toast }}）</div>
       </div>
 
       <div class="detail-item">
         <span class="label">🥗 野菜のカスタマイズ</span>
-        <div class="veggie-list text-content">
-          {% for veg, amt in veggies.items() %}
-          <div>・{{ veg }}：<strong>{{ amt }}</strong></div>
-          {% endfor %}
+        <div class="display-text">
+          <div class="veggie-list">
+            {% for veg, amt in veggies.items() %}
+            <div>・{{ veg }}：<strong>{{ amt }}</strong></div>
+            {% endfor %}
+          </div>
         </div>
       </div>
 
       <div class="detail-item">
         <span class="label">🧀 有料トッピング</span>
-        <div class="text-content">{{ toppings|join('、 ') if toppings else 'なし' }}</div>
+        <div class="display-text">{{ toppings|join('、 ') if toppings else 'なし' }}</div>
       </div>
 
       <div class="detail-item">
         <span class="label">🍯 ソース</span>
-        <div class="sauce-list">
+        <div class="sauce-list display-text">
           {% for sauce in sauces %}
             <div>・{{ sauce }}</div>
           {% endfor %}
         </div>
       </div>
     </div>
-    <a href="/" class="btn">もう一度ガチャを回す</a>
+    <a href="/" class="btn" style="display: block; width: 80%; margin: 20px auto; padding: 15px; background: #00923f; color: white; text-decoration: none; border-radius: 30px; font-weight: bold; transition: 0.3s; border: 2px solid #00923f; text-align: center;">もう一度ガチャを回す</a>
   </div>
 </body>
 </html>
