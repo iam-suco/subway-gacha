@@ -12,24 +12,34 @@
     .result-image { width: 85%; max-width: 400px; height: auto; aspect-ratio: 4 / 3; object-fit: contain; margin: 10px auto; display: block; background-color: #fff; } 
     .content { padding: 20px; text-align: left; } 
     h2 { color: #00923f; border-bottom: 2px solid #ffc20e; padding-bottom: 5px; margin-top: 0; } 
-    .detail-item { margin-bottom: 15px; padding: 10px; background: #f0f7f3; border-radius: 8px; font-size: 0.9em; } /* 文字サイズを0.9emに統一 */
+    
+    .detail-item { 
+      margin-bottom: 15px; 
+      padding: 10px; 
+      background: #f0f7f3; 
+      border-radius: 8px; 
+      font-size: 0.95em; 
+      line-height: 1.6;
+    } 
     .label { font-weight: bold; color: #00923f; display: block; margin-bottom: 5px; font-size: 1.0em; } 
     
-    /* 野菜リスト：1項目1行ずつ表示 */
-    .veggie-list { display: block; }
-    .veggie-list div { white-space: nowrap; margin-bottom: 3px; font-size: 1.0em; } 
+    /* 野菜：確実に1行1項目 */
+    .veggie-list { display: block !important; }
+    .veggie-list div { display: block; white-space: nowrap; } 
     
-    /* ソースリスト：1行3列（文字が漏れないよう調整） */
+    /* ソース：スマホは2列にしてスペースを確保、PCは3列 */
     .sauce-list { 
       display: grid; 
-      grid-template-columns: repeat(3, 1fr); 
-      gap: 8px 5px; 
+      grid-template-columns: repeat(2, 1fr); /* 2列に増枠 */
+      gap: 5px; 
+    }
+    @media (min-width: 450px) {
+      .sauce-list { grid-template-columns: repeat(3, 1fr); }
     }
     .sauce-list div { 
       white-space: nowrap; 
-      overflow: hidden; 
-      text-overflow: ellipsis;
-      font-size: 1.0em; /* ここも統一 */
+      overflow: visible; /* 「...」にならないように全て表示 */
+      font-size: 0.9em; /* 文字をわずかに小さくして収まりやすく */
     }
 
     .btn { display: block; width: 80%; margin: 20px auto; padding: 15px; background: #00923f; color: white; text-decoration: none; border-radius: 30px; font-weight: bold; transition: 0.3s; border: 2px solid #00923f; text-align: center; } 
@@ -37,18 +47,15 @@
   </style>
 </head>
 <body>
-  <noscript>
-    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5PPF6MGL" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-  </noscript>
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5PPF6MGL" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="container">
     <div class="header">サブウェイ カスタムガチャ</div>
-    
     <img src="{{ url_for('static', filename='images/' + image) }}" alt="{{ item }}" class="result-image">
-    
     <div class="content">
       <h2>{{ item }}</h2>
       <div class="detail-item">
-        <span class="label">🥪 パンと焼き加減</span>{{ bread }}（{{ toast }}）
+        <span class="label">🥪 パンと焼き加減</span>
+        <div>{{ bread }}（{{ toast }}）</div>
       </div>
       <div class="detail-item">
         <span class="label">🥗 野菜のカスタマイズ</span>
@@ -59,7 +66,8 @@
         </div>
       </div>
       <div class="detail-item">
-        <span class="label">🧀 有料トッピング</span>{{ toppings|join('、 ') if toppings else 'なし' }}
+        <span class="label">🧀 有料トッピング</span>
+        <div>{{ toppings|join('、 ') if toppings else 'なし' }}</div>
       </div>
       <div class="detail-item">
         <span class="label">🍯 ソース</span>
@@ -72,6 +80,5 @@
     </div>
     <a href="/" class="btn">もう一度ガチャを回す</a>
   </div>
-  <p style="font-size: 0.8em; color: #999; margin-top: 20px;">※画像がない場合は枠のみ表示されます</p>
 </body>
 </html>
