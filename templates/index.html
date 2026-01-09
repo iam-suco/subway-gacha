@@ -15,21 +15,16 @@
     .detail-item { margin-bottom: 15px; padding: 10px; background: #f0f7f3; border-radius: 8px; } 
     .label { font-weight: bold; color: #00923f; display: block; margin-bottom: 5px; } 
     
-    /* 野菜リスト：スマホは1列、PC（400px以上）は2列 */
+    /* 野菜：スマホ1列・PC2列 */
     .veggie-list { display: grid; grid-template-columns: 1fr; gap: 3px; }
-    @media (min-width: 400px) {
+    @media (min-width: 450px) {
       .veggie-list { grid-template-columns: 1fr 1fr; }
     }
     .veggie-list div { white-space: nowrap; font-size: 0.9em; } 
     
-    /* ソースリスト：スマホは2列、PC（400px以上）は3列 */
-    .sauce-list { 
-      display: grid; 
-      grid-template-columns: repeat(2, 1fr); 
-      gap: 8px 5px; 
-      font-size: 0.85em; 
-    }
-    @media (min-width: 400px) {
+    /* ソース：スマホ2列・PC3列 */
+    .sauce-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px 5px; font-size: 0.85em; }
+    @media (min-width: 450px) {
       .sauce-list { grid-template-columns: repeat(3, 1fr); }
     }
     .sauce-list div { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -39,9 +34,8 @@
   </style>
 </head>
 <body>
-  <noscript>
-    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5PPF6MGL" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-  </noscript>
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5PPF6MGL" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  
   <div class="container">
     <div class="header">サブウェイ カスタムガチャ</div>
     
@@ -49,9 +43,12 @@
     
     <div class="content">
       <h2>{{ item }}</h2>
+      
       <div class="detail-item">
-        <span class="label">🥪 パンと焼き加減</span>{{ bread }}（{{ toast }}）
+        <span class="label">🥪 パンと焼き加減</span>
+        {{ bread }}（{{ toast }}）
       </div>
+
       <div class="detail-item">
         <span class="label">🥗 野菜のカスタマイズ</span>
         <div class="veggie-list">
@@ -60,9 +57,12 @@
           {% endfor %}
         </div>
       </div>
+
       <div class="detail-item">
-        <span class="label">🧀 有料トッピング</span>{{ toppings|join('、 ') }}
+        <span class="label">🧀 有料トッピング</span>
+        {{ toppings|join('、 ') if toppings else 'なし' }}
       </div>
+
       <div class="detail-item">
         <span class="label">🍯 ソース</span>
         <div class="sauce-list">
@@ -72,6 +72,7 @@
         </div>
       </div>
     </div>
+    
     <a href="/" class="btn">もう一度ガチャを回す</a>
   </div>
   <p style="font-size: 0.8em; color: #999; margin-top: 20px;">※画像がない場合は枠のみ表示されます</p>
