@@ -13,33 +13,41 @@
     .content { padding: 20px; text-align: left; } 
     h2 { color: #00923f; border-bottom: 2px solid #ffc20e; padding-bottom: 5px; margin-top: 0; } 
     
+    /* 文字サイズと構造を全項目で統一 */
     .detail-item { 
       margin-bottom: 15px; 
       padding: 10px; 
       background: #f0f7f3; 
       border-radius: 8px; 
-      font-size: 0.95em; 
-      line-height: 1.6;
+      font-size: 1.0em; /* 全体の基本サイズを固定 */
+      line-height: 1.5;
     } 
-    .label { font-weight: bold; color: #00923f; display: block; margin-bottom: 5px; font-size: 1.0em; } 
+    .label { font-weight: bold; color: #00923f; display: block; margin-bottom: 5px; font-size: 0.95em; } 
     
-    /* 野菜：確実に1行1項目 */
+    /* 共通のテキストスタイル（パン、トッピング、野菜用） */
+    .text-content { 
+      display: block; 
+      font-size: 1.0em; 
+    }
+
+    /* 野菜リスト：確実に1行1項目 */
     .veggie-list { display: block !important; }
-    .veggie-list div { display: block; white-space: nowrap; } 
+    .veggie-list div { display: block; width: 100%; } 
     
-    /* ソース：スマホは2列にしてスペースを確保、PCは3列 */
+    /* ソースリスト：スマホは2列、PCは3列 */
     .sauce-list { 
       display: grid; 
-      grid-template-columns: repeat(2, 1fr); /* 2列に増枠 */
-      gap: 5px; 
+      grid-template-columns: repeat(2, 1fr); 
+      gap: 10px 5px; 
     }
     @media (min-width: 450px) {
       .sauce-list { grid-template-columns: repeat(3, 1fr); }
     }
     .sauce-list div { 
-      white-space: nowrap; 
-      overflow: visible; /* 「...」にならないように全て表示 */
-      font-size: 0.9em; /* 文字をわずかに小さくして収まりやすく */
+      font-size: 1.0em;
+      white-space: normal; /* 改行を許可して「...」を防ぐ */
+      word-break: break-all; /* 長い単語でも枠内で折り返す */
+      overflow: visible;
     }
 
     .btn { display: block; width: 80%; margin: 20px auto; padding: 15px; background: #00923f; color: white; text-decoration: none; border-radius: 30px; font-weight: bold; transition: 0.3s; border: 2px solid #00923f; text-align: center; } 
@@ -53,22 +61,26 @@
     <img src="{{ url_for('static', filename='images/' + image) }}" alt="{{ item }}" class="result-image">
     <div class="content">
       <h2>{{ item }}</h2>
+      
       <div class="detail-item">
         <span class="label">🥪 パンと焼き加減</span>
-        <div>{{ bread }}（{{ toast }}）</div>
+        <div class="text-content">{{ bread }}（{{ toast }}）</div>
       </div>
+
       <div class="detail-item">
         <span class="label">🥗 野菜のカスタマイズ</span>
-        <div class="veggie-list">
+        <div class="veggie-list text-content">
           {% for veg, amt in veggies.items() %}
           <div>・{{ veg }}：<strong>{{ amt }}</strong></div>
           {% endfor %}
         </div>
       </div>
+
       <div class="detail-item">
         <span class="label">🧀 有料トッピング</span>
-        <div>{{ toppings|join('、 ') if toppings else 'なし' }}</div>
+        <div class="text-content">{{ toppings|join('、 ') if toppings else 'なし' }}</div>
       </div>
+
       <div class="detail-item">
         <span class="label">🍯 ソース</span>
         <div class="sauce-list">
