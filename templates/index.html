@@ -12,28 +12,24 @@
     .result-image { width: 85%; max-width: 400px; height: auto; aspect-ratio: 4 / 3; object-fit: contain; margin: 10px auto; display: block; background-color: #fff; } 
     .content { padding: 20px; text-align: left; } 
     h2 { color: #00923f; border-bottom: 2px solid #ffc20e; padding-bottom: 5px; margin-top: 0; } 
-    .detail-item { margin-bottom: 15px; padding: 10px; background: #f0f7f3; border-radius: 8px; } 
-    .label { font-weight: bold; color: #00923f; display: block; margin-bottom: 5px; } 
+    .detail-item { margin-bottom: 15px; padding: 10px; background: #f0f7f3; border-radius: 8px; font-size: 0.9em; } /* 文字サイズを0.9emに統一 */
+    .label { font-weight: bold; color: #00923f; display: block; margin-bottom: 5px; font-size: 1.0em; } 
     
-    /* 野菜リスト：PCで見やすいように2列にする設定を追加 */
-    .veggie-list {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr); /* 2列に並べる */
-      gap: 3px 10px;
-    }
-    .veggie-list div { white-space: nowrap; margin-bottom: 3px; font-size: 0.9em; } 
+    /* 野菜リスト：1項目1行ずつ表示 */
+    .veggie-list { display: block; }
+    .veggie-list div { white-space: nowrap; margin-bottom: 3px; font-size: 1.0em; } 
     
-    /* ソースリスト：1行3列で固定（PCでもスマホでも崩れにくい） */
+    /* ソースリスト：1行3列（文字が漏れないよう調整） */
     .sauce-list { 
       display: grid; 
       grid-template-columns: repeat(3, 1fr); 
       gap: 8px 5px; 
-      font-size: 0.8em; 
     }
     .sauce-list div { 
       white-space: nowrap; 
       overflow: hidden; 
-      text-overflow: ellipsis; 
+      text-overflow: ellipsis;
+      font-size: 1.0em; /* ここも統一 */
     }
 
     .btn { display: block; width: 80%; margin: 20px auto; padding: 15px; background: #00923f; color: white; text-decoration: none; border-radius: 30px; font-weight: bold; transition: 0.3s; border: 2px solid #00923f; text-align: center; } 
