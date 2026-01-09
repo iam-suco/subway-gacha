@@ -15,20 +15,25 @@
     .detail-item { margin-bottom: 15px; padding: 10px; background: #f0f7f3; border-radius: 8px; } 
     .label { font-weight: bold; color: #00923f; display: block; margin-bottom: 5px; } 
     
-    /* 野菜リストの設定：1列表示で改行禁止 */
+    /* 野菜リスト：PCで見やすいように2列にする設定を追加 */
+    .veggie-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr); /* 2列に並べる */
+      gap: 3px 10px;
+    }
     .veggie-list div { white-space: nowrap; margin-bottom: 3px; font-size: 0.9em; } 
     
-    /* ソースリストの設定：1行3列に変更 */
+    /* ソースリスト：1行3列で固定（PCでもスマホでも崩れにくい） */
     .sauce-list { 
       display: grid; 
-      grid-template-columns: repeat(3, 1fr); /* 常に3列 */
-      gap: 8px 5px; /* 上下の隙間を少し広めに設定 */
-      font-size: 0.8em; /* 枠に収まりやすくするため少し小さく調整 */
+      grid-template-columns: repeat(3, 1fr); 
+      gap: 8px 5px; 
+      font-size: 0.8em; 
     }
     .sauce-list div { 
       white-space: nowrap; 
       overflow: hidden; 
-      text-overflow: ellipsis; /* 万が一入り切らない場合は末尾を「...」にする */
+      text-overflow: ellipsis; 
     }
 
     .btn { display: block; width: 80%; margin: 20px auto; padding: 15px; background: #00923f; color: white; text-decoration: none; border-radius: 30px; font-weight: bold; transition: 0.3s; border: 2px solid #00923f; text-align: center; } 
@@ -58,7 +63,7 @@
         </div>
       </div>
       <div class="detail-item">
-        <span class="label">🧀 有料トッピング</span>{{ toppings|join('、 ') }}
+        <span class="label">🧀 有料トッピング</span>{{ toppings|join('、 ') if toppings else 'なし' }}
       </div>
       <div class="detail-item">
         <span class="label">🍯 ソース</span>
