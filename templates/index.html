@@ -19,14 +19,9 @@
       background: #f0f7f3; 
       border-radius: 8px; 
       line-height: 1.6;
+      font-size: 1.0rem; /* 全項目共通のフォントサイズ */
     } 
     .label { font-weight: bold; color: #00923f; display: block; margin-bottom: 8px; font-size: 0.95em; } 
-
-    /* 全体の文字サイズを1.0remで統一 */
-    .display-text { 
-      font-size: 1.0rem; 
-      color: #333;
-    }
 
     /* 野菜：1行1項目 */
     .veggie-list div { 
@@ -34,25 +29,16 @@
       white-space: nowrap; 
     } 
     
-    /* ソース：長い名前は1行を独占させ、かつ「入り切らなければ縮小」させる */
+    /* ソース：1行に最大2つ並べる設定 */
     .sauce-list { 
-      display: flex;
-      flex-direction: column; /* 基本は1行1項目（縦並び）にすることで確実に1行を確保 */
-      gap: 6px; 
+      display: grid; 
+      grid-template-columns: repeat(2, 1fr); /* 2列に固定 */
+      gap: 8px 10px; 
     }
     .sauce-list div { 
       white-space: nowrap; /* 絶対に改行させない */
-      font-size: 1.0rem;
-      /* スマホの横幅が厳しい時に文字を少し詰める/小さくする設定 */
+      font-size: 0.95rem;   /* 2列にした際に枠内に収まりやすくするため、ごくわずかに調整 */
       overflow: hidden; 
-      display: inline-block;
-      width: 100%;
-    }
-
-    /* 非常に長いソース名への個別対策（オイル&ビネガーなど） */
-    .sauce-item-long {
-      letter-spacing: -0.5px; /* 字間を少し詰める */
-      font-size: 0.85rem !important; /* 長い時だけ少し小さくして1行にねじ込む */
     }
 
     .btn { display: block; width: 80%; margin: 20px auto; padding: 15px; background: #00923f; color: white; text-decoration: none; border-radius: 30px; font-weight: bold; transition: 0.3s; border: 2px solid #00923f; text-align: center; } 
@@ -69,30 +55,28 @@
       
       <div class="detail-item">
         <span class="label">🥪 パンと焼き加減</span>
-        <div class="display-text">{{ bread }}（{{ toast }}）</div>
+        <div>{{ bread }}（{{ toast }}）</div>
       </div>
 
       <div class="detail-item">
         <span class="label">🥗 野菜のカスタマイズ</span>
-        <div class="display-text">
-          <div class="veggie-list">
-            {% for veg, amt in veggies.items() %}
-            <div>・{{ veg }}：<strong>{{ amt }}</strong></div>
-            {% endfor %}
-          </div>
+        <div class="veggie-list">
+          {% for veg, amt in veggies.items() %}
+          <div>・{{ veg }}：<strong>{{ amt }}</strong></div>
+          {% endfor %}
         </div>
       </div>
 
       <div class="detail-item">
         <span class="label">🧀 有料トッピング</span>
-        <div class="display-text">{{ toppings|join('、 ') if toppings else 'なし' }}</div>
+        <div>{{ toppings|join('、 ') if toppings else 'なし' }}</div>
       </div>
 
       <div class="detail-item">
         <span class="label">🍯 ソース</span>
-        <div class="sauce-list display-text">
+        <div class="sauce-list">
           {% for sauce in sauces %}
-            <div class="{% if sauce|length > 8 %}sauce-item-long{% endif %}">・{{ sauce }}</div>
+            <div>・{{ sauce }}</div>
           {% endfor %}
         </div>
       </div>
